@@ -20,25 +20,23 @@ pipeline {
               } 
             }
         }
-        
-
+           
         stage('Deploy') {
             steps {
                 script {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'FILE')]) {
-       //         if (env.BRANCH_NAME == "master" || env.BRANCH_NAME == "test" || env.BRANCH_NAME == "prod") {
                     sh """
                      export NUMBER=\$(cat ../vars.txt)
                      cp bakehouse/values.yaml bakehouse/values.yaml.tmp
                      cat bakehouse/values.yaml.tmp | envsubst > bakehouse/values.yaml
                      rm -f bakehouse/values.yaml.tmp
-                     helm install bakehouse ./bakehouse/ --kubeconfig=$FILE
-                     if [ \$? -eq 1 ]
-                     then
-                        helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE
-                    fi  
                      """
-         //           }
+                      sh 'helm install bakehouse ./bakehouse/ --kubeconfig=$FILE'
+                     if [ $? -eq 1 ]
+                     then
+                        sh 'helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE'
+                    fi  
+                     
                 }
               }
             }
