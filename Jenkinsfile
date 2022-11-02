@@ -37,7 +37,7 @@ pipeline {
               }
             }
         }
-        stage('Test') {
+        stage('Test') { 
             steps {
             withCredentials([file(credentialsId: 'kubeconfig', variable: 'FILE')]) {
                 sh(returnStdout: true, script: '''#!/bin/bash
@@ -47,7 +47,8 @@ pipeline {
                         sh 'helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE'
                     fi  
         '''.stripIndent())
-    }
-}
+                }
+            }
+        }
     }
 }
