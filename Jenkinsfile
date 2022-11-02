@@ -33,7 +33,7 @@ pipeline {
                      cat bakehouse/values.yaml.tmp | envsubst > bakehouse/values.yaml
                      rm -f bakehouse/values.yaml.tmp
                      helm install bakehouse ./bakehouse/ --kubeconfig=$FILE
-                     if [ $? -eq 1 ]
+                     if [ \$? -eq 1 ]
                      then
                         helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE
                     fi  
