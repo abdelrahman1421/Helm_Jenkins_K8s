@@ -32,10 +32,10 @@ pipeline {
                      rm -f bakehouse/values.yaml.tmp
                      """
                       sh 'helm install bakehouse ./bakehouse/ --kubeconfig=$FILE'
-                     if [ $? -eq 1 ]
+                     if [ $? -eq 1 ];
                      then
                         sh 'helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE'
-                    fi  
+                     fi  
                      
                 }
               }
