@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'FILE')]) {
-                if (env.BRANCH_NAME == "master" || env.BRANCH_NAME == "test" || env.BRANCH_NAME == "prod") {
+       //         if (env.BRANCH_NAME == "master" || env.BRANCH_NAME == "test" || env.BRANCH_NAME == "prod") {
                     sh """
                      export NUMBER=\$(cat ../vars.txt)
                      cp bakehouse/values.yaml bakehouse/values.yaml.tmp
@@ -38,7 +38,7 @@ pipeline {
                         helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE
                     fi  
                      """
-                    }
+         //           }
                 }
               }
             }
