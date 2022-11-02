@@ -1,0 +1,14 @@
+
+
+service:
+  type: NodePort
+
+spec:
+  replicas: 1
+  selector:
+  app: bakehouse
+  image: engboda/bakehouse:${NUMBER}
+
+  containerPort: 80
+
+        
