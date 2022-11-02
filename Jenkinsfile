@@ -30,24 +30,13 @@ pipeline {
                      cp bakehouse/values.yaml bakehouse/values.yaml.tmp
                      cat bakehouse/values.yaml.tmp | envsubst > bakehouse/values.yaml
                      rm -f bakehouse/values.yaml.tmp
+                     helm install bakehouse ./bakehouse/ --kubeconfig=$FILE
                      """
-                    
+                      
+                     
                      
                 }
               }
-            }
-        }
-        stage('Test') { 
-            steps {
-            withCredentials([file(credentialsId: 'kubeconfig', variable: 'FILE')]) {
-                sh(returnStdout: true, script: '''#!/bin/bash
-                    helm install bakehouse ./bakehouse/ --kubeconfig=$FILE
-                    if [ $? -eq 1 ];
-                    then
-                        sh 'helm upgrade bakehouse ./bakehouse/ --kubeconfig=$FILE'
-                    fi  
-        '''.stripIndent())
-                }
             }
         }
     }
