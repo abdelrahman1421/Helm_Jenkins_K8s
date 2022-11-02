@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script{
-                if (env.BRANCH_NAME == "master") {
+                
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
                     sh """
@@ -16,7 +16,7 @@ pipeline {
 
                      """ 
                     }
-                }
+                
               } 
             }
         }
